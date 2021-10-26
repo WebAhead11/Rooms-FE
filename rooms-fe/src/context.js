@@ -17,6 +17,8 @@ export default class ProductProvider extends Component {
         console.log(this.state.rooms);
     })
     .catch(err=>console.log(err))
+
+   
     render() {
         return (
             <div>

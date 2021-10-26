@@ -1,0 +1,5 @@
+## Create Room:
+- when clicking on create room btn, appears a small window with a form in it.
+this form has the details of the room: name, description. also the name of the creator.
+- in the form there is a create btn. this btn updates database, then goes inside the room.
+- admin/creator has certain privilages: delete room, kick/ban user, edit room details.
