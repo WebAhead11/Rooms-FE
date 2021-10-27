@@ -42,6 +42,9 @@ export default function Navbar(){
                                     <ButtonContainer onClick={logOut} yellow>
                                         Logout
                                     </ButtonContainer>
+                                    <ButtonContainer onClick={ ()=> val.openModal() }>
+                                     Create Room
+                                    </ButtonContainer>
                                 </React.Fragment>
                             );
                         }else{
@@ -49,15 +52,9 @@ export default function Navbar(){
                                 Login
                                 </ButtonContainer>);
                         }
-               
-                    }}
-                  </ProductConsumer>
 
-                    <Link to='/'>
-                    <ButtonContainer yellow>
-                        Create Room
-                    </ButtonContainer>
-                    </Link>
+                     }}
+             </ProductConsumer>
                 </NavWrapper>
             
         )

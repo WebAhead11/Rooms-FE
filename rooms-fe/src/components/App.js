@@ -3,6 +3,7 @@ import '../App.css';
 import Navbar from "./Navbar";
 import { Switch, Route } from "react-router-dom";
 import RoomList from "./RoomList";
+import Modal from "./Modal";
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
         <Route path="/cart" component={Cart}></Route>
         <Route component={Default}></Route> */}
       </Switch>
+    <Modal></Modal>
     </React.Fragment>
+    
   );
 }
 
