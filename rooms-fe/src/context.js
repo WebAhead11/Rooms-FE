@@ -5,7 +5,8 @@ export default class ProductProvider extends Component {
     state = {
         rooms: [],
         loggedIn : false,
-        user: null
+        user: null,
+        modalOpen: false,
     }
     logIn = (username)=>{
         this.setState(()=>{
@@ -13,19 +14,29 @@ export default class ProductProvider extends Component {
         })
     }
     logOut = ()=>{
-  //      localStorage.removeItem("user");
         this.setState(()=>{
             return {loggedIn : false};
         })
     }
+    openModal = () => {
+       
+        this.setState(() => {
+          return {modalOpen: true };
+        });
+      };
+      closeModal = () => {
+        this.setState(() => {
+          return { modalOpen: false };
+        });
+      };
+     
     // need to change this url in order to work on heroku or other server providers
     roomsDataFromDB = fetch("http://localhost:5000/rooms")
     .then(res=>{
         return res.json();
     })
     .then(data=>{
-        window.localStorage.clear();
-        this.setState(()=>{
+         this.setState(()=>{
             return {rooms: data};
         })
     //    console.log(this.state.rooms);
@@ -42,7 +53,9 @@ export default class ProductProvider extends Component {
                  value={{
                      ...this.state,
                      logIn: this.logIn,
-                     logOut: this.logOut
+                     logOut: this.logOut,
+                     openModal: this.openModal,
+                     closeModal: this.closeModal
                  }}
                  >
                  {this.props.children}
