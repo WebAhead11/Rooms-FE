@@ -7,13 +7,13 @@ import { ProductConsumer } from '../context';
 
 
 function popup (logIn) {
-    let answer=  window.prompt("What’s your name?"); 
+    let username=  window.prompt("What’s your name?"); 
     fetch("http://localhost:5000/create-user", {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'
         },
-        body: JSON.stringify( {username:answer} )
+        body: JSON.stringify( {username} )
     })
     .then(res=>res.json())
     .then(username=>{

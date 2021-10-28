@@ -1,68 +1,79 @@
-import React, { Component } from "react";
+import React from "react";
+import { useState } from "react";
 const ProductContext = React.createContext();
 
-export default class ProductProvider extends Component {
-    state = {
-        rooms: [],
-        loggedIn : false,
-        user: null,
-        modalOpen: false,
+export default function ProductProvider(props) {
+    // state = {
+    //     rooms: [],
+    //     loggedIn : false,
+    //     user: null,
+    //     modalOpen: false,
+    // }
+    const [rooms,setRooms] = useState([]);
+    const [loggedIn,setLoggedIn] = useState(false);
+    const [user,setUser] = useState(null);
+    const [modalOpen,setModalOpen] = useState(false);
+    const logIn = (username)=>{
+        setLoggedIn(true);
+        setUser(username);
+        // this.setState(()=>{
+        //     return {loggedIn : true , user:username};
+        // })
     }
-    logIn = (username)=>{
-        this.setState(()=>{
-            return {loggedIn : true , user:username};
-        })
+    const logOut = ()=>{
+        setLoggedIn(false);
+        // this.setState(()=>{
+        //     return {loggedIn : false};
+        // })
     }
-    logOut = ()=>{
-        this.setState(()=>{
-            return {loggedIn : false};
-        })
-    }
-    openModal = () => {
-       
-        this.setState(() => {
-          return {modalOpen: true };
-        });
+    const openModal = () => {
+        setModalOpen(true);
+        // this.setState(() => {
+        //   return {modalOpen: true };
+        // });
       };
-      closeModal = () => {
-        this.setState(() => {
-          return { modalOpen: false };
-        });
+      const closeModal = () => {
+        setModalOpen(false);
+        // this.setState(() => {
+        //   return { modalOpen: false };
+        // });
       };
      
     // need to change this url in order to work on heroku or other server providers
-    roomsDataFromDB = fetch("http://localhost:5000/rooms")
+    const roomsDataFromDB = fetch("http://localhost:5000/rooms")
     .then(res=>{
         return res.json();
     })
     .then(data=>{
-         this.setState(()=>{
-            return {rooms: data};
-        })
+        setRooms(data);
+        //  this.setState(()=>{
+        //     return {rooms: data};
+        // })
     //    console.log(this.state.rooms);
     })
     .catch(err=>console.log(err))
 
     /** clear logged in user */
     
-   
-    render() {
         return (
             <div>
                  <ProductContext.Provider
                  value={{
-                     ...this.state,
-                     logIn: this.logIn,
-                     logOut: this.logOut,
-                     openModal: this.openModal,
-                     closeModal: this.closeModal
+                     rooms:rooms,
+                     loggedIn:loggedIn,
+                     user:user,
+                     modalOpen:modalOpen,
+                     logIn:logIn,
+                     logOut: logOut,
+                     openModal: openModal,
+                     closeModal: closeModal
                  }}
                  >
-                 {this.props.children}
+                 {props.children}
                  </ProductContext.Provider>
             </div>
         )
-    }
+    
 }
 
 const ProductConsumer = ProductContext.Consumer;
