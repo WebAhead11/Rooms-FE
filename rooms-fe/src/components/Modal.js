@@ -3,13 +3,29 @@ import styled from "styled-components";
 import { ProductConsumer } from "../context";
 import { ButtonContainer } from "./Button";
 import { Link } from "react-router-dom";
+import CreateRoomForm from './CreateRoomForm'
 
 export default class Modal extends Component {
+  saveToDB = (name,description)=>{
+
+    fetch("http://localhost:5000/create-room", {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( {username:answer} )
+    })
+    .then(res=>res.json())
+    .then(username=>{
+        logIn(username.username);
+    })
+    .catch(err=> console.log(err))
+  }
   render() {
     return (
       <ProductConsumer>
         {(value) => {
-          const { modalOpen, closeModal } = value;
+          const { modalOpen, closeModal, user } = value;
           if (!modalOpen) {
             return null;
           } else {
@@ -21,23 +37,8 @@ export default class Modal extends Component {
                       id="modal"
                       className="col-8 mx-auto col-md-6 col-lg-4 text-center text-capitalize p-5"
                     >
-                      <h5>Create your dream room</h5>
-                      <div class="field">
-                        <label htmlFor = "room-name">Room Name:</label>
-                        <input name="text" type="text" id = "room-name" placeholder="choose a name for your room"/> 
-                      </div>
-                      <div class="field">
-                        <label htmlFor = "about">Description:</label>
-                        <input name="about" type="text" id = "about" placeholder="describe your room"/> 
-                      </div>
-                      <div className="modal-footer">
-                      
-                        <button onClick={() => closeModal()} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                      
-                      <Link to="/">
-                         <button onClick={() => closeModal()} type="button" className="btn btn-primary">Save changes</button>
-                      </Link>
-                        </div>
+                      <CreateRoomForm user={user} closeModal={closeModal}></CreateRoomForm>
+                     
                     </div>
                   </div>
                 </div>
