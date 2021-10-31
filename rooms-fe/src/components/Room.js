@@ -5,6 +5,7 @@ import { ProductConsumer } from "../context";
 import { ButtonContainer } from './Button';
 
 export default class Room extends Component {
+
     render() {
         const { id, name, description } = this.props.room;
         return (
