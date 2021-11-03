@@ -1,9 +1,12 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import Title from './Title'
 import { ProductConsumer } from "../context";
 import Room from './Room'
-export default class RoomList extends Component {
-    render() {
+export default function RoomList(props) {    
+  
+    useEffect(()=>{
+        props.setCurrentRoom(null);
+    },[])
         return (
             <React.Fragment>
             <div className="py-5">
@@ -12,9 +15,15 @@ export default class RoomList extends Component {
                 <div className="row">
                   <ProductConsumer>
                     {(val) => {
+                    
+                      const  {currentRoom,onlineUsers,setOnlineUsers,setCurrentRoom,getUsersFromDB,joinRoom} = val;
+
+                        
                       return val.rooms.map((room) => {
                         return (
-                          <Room key={room.id} room={room}></Room>
+                          <Room key={room.id} room={room} user={val.user} loggedIn={val.loggedIn} setCurrentRoom={setCurrentRoom} setOnlineUsers={setOnlineUsers} getUsersFromDB={getUsersFromDB} joinRoom={joinRoom}>
+
+                          </Room>
                         );
                       });
                     }}
@@ -25,4 +34,3 @@ export default class RoomList extends Component {
           </React.Fragment>
         )
     }
-}

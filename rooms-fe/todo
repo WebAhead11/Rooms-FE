@@ -1,16 +1,40 @@
 ## Create Room:
-- when clicking on create room btn, appears a small window with a form in it.
-this form has the details of the room: name, description. also the name of the creator.
-- in the form there is a create btn. this btn updates database, then goes inside the room.
+- when clicking on create room btn, appears a small window with a form in it -DONE
+this form has the details of the room: name, description. also the name of the creator. DONE
+- in the form there is a create btn. this btn updates database, then goes inside the room.DONE
 - admin/creator has certain privilages: delete room, kick/ban user, edit room details.
 
 # continue where I left off:
 - syle form.
 - style rooms
-- delete guest users info with their rooms after they logged out.
 - implement login with password
+- when not in home path, the log in button should redirect to home path
 
 # manage users in DB
+- delete guest users info with their rooms after they logged out. NEXT
+- handle the unique username error
+- immplement max users in room
 
+## UserList:
+- add room name in user list. NEXT
 
 ## Join Room:
+- on click: send data=(username,room_id) to server - done
+- server updates user_room DB: adds a new row - done
+- show a list of users in that room - done
+- exit room before joining another.
+- get all users from a certain room from DB and show them in "user-list" path: done
+
+# exit room
+- a button that removes a user from room list - DONE
+- add join room button in user list - DONE
+
+## bugs
+- if in home page: current room = null : done
+- if press on room before sign in: show correct users - done
+- in RoomList: do setCurrentRoom(null) without errors : done
+-  set user cancel button bug.
+- siging in with empty username
+- change online users whenever room changes - Done
+- log out of room when user logs out
+- onlineUsers should be empty in home page - done

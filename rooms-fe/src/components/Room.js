@@ -3,31 +3,40 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ProductConsumer } from "../context";
 import { ButtonContainer } from './Button';
-
-export default class Room extends Component {
-
-    render() {
-        const { id, name, description } = this.props.room;
+import { render } from '@testing-library/react';
+import UserList from './UserList';
+import { useHistory } from 'react-router';
+export default function Room (props) {
+  let history = useHistory();
+  const showUserList = (room_id)=>{
+    props.setCurrentRoom(room_id);
+    history.push("/user-list"); 
+  }
+  
+  
+        const user = props.user;
+        const loggedIn = props.loggedIn;
+        const { id, name, description } = props.room;
         return (
             <RoomWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
                 <div className='card'>
                   <div>
                     <h3 className="text-blue font-italic mb-0">
-                    <span> {name}  </span>
+                    <button onClick={()=>showUserList(id)}> {name}  </button>
                     </h3>
                     <span>  {description}  </span>
-                    <ButtonContainer>Join Room</ButtonContainer>
+                    {
+                      loggedIn ? <ButtonContainer onClick={()=>{
+                        console.log("outside join")
+                        props.joinRoom(id,user,history)}}>Join Room</ButtonContainer>:
+                      <React.Fragment></React.Fragment>
+                    }        
                   </div>
-
-            
-            
-                
                 </div>
             </RoomWrapper>
             
         )
     }
-}
 
 const RoomWrapper = styled.div`
   .card{
