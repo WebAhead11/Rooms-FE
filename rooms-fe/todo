@@ -24,6 +24,7 @@ this form has the details of the room: name, description. also the name of the c
 - show a list of users in that room - done
 - exit room before joining another.
 - get all users from a certain room from DB and show them in "user-list" path: done
+- handle joining room if already in room
 
 # exit room
 - a button that removes a user from room list - DONE
@@ -31,6 +32,10 @@ this form has the details of the room: name, description. also the name of the c
 
 # logging out
 - don't log out when refreshing page - DONE
+
+# Delete room
+- in room component, add a delete room button that updates DB and relevant states like rooms. DONE
+- only creator can delete room
 
 ## bugs
 - if in home page: current room = null : done

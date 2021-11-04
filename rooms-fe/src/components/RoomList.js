@@ -16,12 +16,12 @@ export default function RoomList(props) {
                   <ProductConsumer>
                     {(val) => {
                     
-                      const  {currentRoom,onlineUsers,setOnlineUsers,setCurrentRoom,getUsersFromDB,joinRoom} = val;
+                      const  {currentRoom,onlineUsers,setOnlineUsers,setCurrentRoom,getUsersFromDB,joinRoom,setRooms} = val;
 
                         
                       return val.rooms.map((room) => {
                         return (
-                          <Room key={room.id} room={room} user={val.user} loggedIn={val.loggedIn} setCurrentRoom={setCurrentRoom} setOnlineUsers={setOnlineUsers} getUsersFromDB={getUsersFromDB} joinRoom={joinRoom}>
+                          <Room key={room.id} room={room} user={val.user} loggedIn={val.loggedIn} setCurrentRoom={setCurrentRoom} setOnlineUsers={setOnlineUsers} getUsersFromDB={getUsersFromDB} joinRoom={joinRoom} setRooms={setRooms}>
 
                           </Room>
                         );

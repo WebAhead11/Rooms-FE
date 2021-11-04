@@ -12,26 +12,45 @@ export default function Room (props) {
     props.setCurrentRoom(props.room);
     history.push("/user-list"); 
   }
+  const deleteRoom = (room_id)=>{
+    // update DB
+    fetch("http://localhost:5000/delete-room", {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify( {room_id} )
+  })
+  .then(res=>res.json())
+  .then(data => {
+    props.setRooms(data)
+  })
+  .catch(err=> console.log(err))
+    // update states
+    
+  }
  
         const user = props.user;
         const loggedIn = props.loggedIn;
         const { id, name, description } = props.room;
         return (
             <RoomWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
+             
                 <div className='card'>
-                  <div>
+                  <div className="row">
                     <h3 className="text-blue font-italic mb-0">
                     <button onClick={showUserList}> {name}  </button>
                     </h3>
                     <span>  {description}  </span>
                     {
                       loggedIn ? <ButtonContainer onClick={()=>{
-                        console.log("outside join")
                         props.joinRoom(props.room,user,history)}}>Join Room</ButtonContainer>:
                       <React.Fragment></React.Fragment>
                     }        
+                    <ButtonContainer onClick={()=>deleteRoom(id)}>Delete Room</ButtonContainer>
                   </div>
                 </div>
+              
             </RoomWrapper>
             
         )
