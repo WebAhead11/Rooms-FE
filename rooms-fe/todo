@@ -44,5 +44,5 @@ this form has the details of the room: name, description. also the name of the c
 -  set user cancel button bug.
 - siging in with empty username
 - change online users whenever room changes - Done
-- log out of room when user logs out -NEXT
+- log out of room when user logs out - DONE
 - onlineUsers should be empty in home page - done

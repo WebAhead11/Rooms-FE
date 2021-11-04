@@ -74,9 +74,29 @@ export default function ProductProvider(props) {
         setUser(username);
     }
     const logOut = ()=>{
-        setLoggedIn(false);
-        setUser(null);
-    }
+       
+        // update DB: exit rooms that he is logged in and delete room that he created
+        fetch("http://localhost:5000/logout", {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( {user} )
+    })
+    .then(res=>res.json())
+    .then(data=>{
+       // server sends back a list of up to date rooms
+       setRooms(data);
+       setLoggedIn(false);
+       setUser(null);
+       getUsersFromDB(currentRoom);
+  //     history.push("/"); 
+    })
+    .catch(err=> console.log(err))
+     }
+
+
+    
     const openModal = () => {
         setModalOpen(true);
       };
@@ -90,6 +110,7 @@ export default function ProductProvider(props) {
       if(!room)
         return;
     const room_id = room.id;
+
     fetch("http://localhost:5000/users-from-room", 
     {
       method: 'POST',
@@ -143,8 +164,8 @@ export default function ProductProvider(props) {
                  </ProductContext.Provider>
             </div>
         )
-    
-}
+                }
+
 
 const ProductConsumer = ProductContext.Consumer;
 
