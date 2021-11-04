@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { ProductConsumer } from '../context';
 
-export default function MyForm({user,closeModal}) {
+export default function MyForm({user,closeModal,setRooms}) {
   const [inputs, setInputs] = useState({user});
 
   const handleChange = (event) => {
@@ -22,7 +22,8 @@ export default function MyForm({user,closeModal}) {
     })
     .then(res=>res.json())
     .then(data=>{
-        console.log(data)
+        setRooms(data);
+        closeModal();
     })
     .catch(err=> console.log(err))
   }

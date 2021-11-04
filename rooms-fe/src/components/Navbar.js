@@ -49,7 +49,7 @@ export default function Navbar(){
                             );
                         }else{
                             return(<ButtonContainer onClick={()=>popup(logIn)} yellow>
-                                Login
+                                Guest Login
                                 </ButtonContainer>);
                         }
 

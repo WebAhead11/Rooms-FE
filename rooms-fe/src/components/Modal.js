@@ -5,8 +5,8 @@ import { ButtonContainer } from "./Button";
 import { Link } from "react-router-dom";
 import CreateRoomForm from './CreateRoomForm'
 
-export default class Modal extends Component {
-  saveToDB = (name,description)=>{
+export default function Modal () {
+  const saveToDB = (name,description)=>{
 
     fetch("http://localhost:5000/create-room", {
         method: 'POST',
@@ -21,12 +21,12 @@ export default class Modal extends Component {
     })
     .catch(err=> console.log(err))
   }
-  render() {
+ 
     return (
       <ProductConsumer>
         {(value) => {
           
-          const { modalOpen, closeModal, user } = value;
+          const { modalOpen, closeModal, user, setRooms } = value;
           if (!modalOpen) {
             return null;
           } else {
@@ -38,7 +38,7 @@ export default class Modal extends Component {
                       id="modal"
                       className="col-8 mx-auto col-md-6 col-lg-4 text-center text-capitalize p-5"
                     >
-                      <CreateRoomForm user={user} closeModal={closeModal}></CreateRoomForm>
+                      <CreateRoomForm user={user} closeModal={closeModal} setRooms={setRooms}></CreateRoomForm>
                      
                     </div>
                   </div>
@@ -50,7 +50,7 @@ export default class Modal extends Component {
       </ProductConsumer>
     );
   }
-}
+
 
 const ModalContainer = styled.div`
     position:fixed;

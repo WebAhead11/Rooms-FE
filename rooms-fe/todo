@@ -16,7 +16,7 @@ this form has the details of the room: name, description. also the name of the c
 - immplement max users in room
 
 ## UserList:
-- add room name in user list. NEXT
+- add room name in user list. DONE
 
 ## Join Room:
 - on click: send data=(username,room_id) to server - done
@@ -29,6 +29,9 @@ this form has the details of the room: name, description. also the name of the c
 - a button that removes a user from room list - DONE
 - add join room button in user list - DONE
 
+# logging out
+- don't log out when refreshing page - DONE
+
 ## bugs
 - if in home page: current room = null : done
 - if press on room before sign in: show correct users - done
@@ -36,5 +39,5 @@ this form has the details of the room: name, description. also the name of the c
 -  set user cancel button bug.
 - siging in with empty username
 - change online users whenever room changes - Done
-- log out of room when user logs out
+- log out of room when user logs out -NEXT
 - onlineUsers should be empty in home page - done

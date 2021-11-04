@@ -13,18 +13,46 @@ export default function ProductProvider(props) {
     const [currentRoom,setCurrentRoom] = useState(null);
 
     
+    /** make states persistent through refresh using local storage */
+    useEffect(() => {
+  
+        setLoggedIn(JSON.parse( window.localStorage.getItem('loggedIn')));
+     
+        setUser(window.localStorage.getItem('user'));
+       
+        setOnlineUsers(window.localStorage.getItem('onlineUsers'));
+       
+        setCurrentRoom(JSON.parse( window.localStorage.getItem('currentRoom')));  
+        
+      }, []);
+    
+      useEffect(() => {
+        window.localStorage.setItem('loggedIn', loggedIn);
+      }, [loggedIn]);
+      useEffect(() => {
+        window.localStorage.setItem('user', user);
+      }, [user]);
+      useEffect(() => {
+        window.localStorage.setItem('onlineUsers', onlineUsers);
+      }, [onlineUsers]);
+    
 
     useEffect(()=>{
+        window.localStorage.setItem('currentRoom', JSON.stringify( currentRoom));
         if(!currentRoom){
             setOnlineUsers([]);
         }
-        else
+        else{
+        //    window.localStorage.setItem('user', user);
             getUsersFromDB(currentRoom);
+        }
+            
     },[currentRoom])
 
 /** updates server which updates DB */
-    const joinRoom = (room_id,user,history)=>{
-
+    const joinRoom = (room,user,history)=>{
+        const room_id = room.id;
+        const room_name = room.name;
         fetch("http://localhost:5000/join-room", {
         method: 'POST',
         headers: {
@@ -34,7 +62,7 @@ export default function ProductProvider(props) {
     })
     .then(res=>res.json())
     .then(data=>{
-        setCurrentRoom(room_id); 
+        setCurrentRoom(room); 
         getUsersFromDB(currentRoom); // updates online users in current room
         history.push("/user-list"); 
     })
@@ -47,6 +75,7 @@ export default function ProductProvider(props) {
     }
     const logOut = ()=>{
         setLoggedIn(false);
+        setUser(null);
     }
     const openModal = () => {
         setModalOpen(true);
@@ -56,10 +85,11 @@ export default function ProductProvider(props) {
       };
 
        /** helper function that fetches from DB a list of users of a specific room  */
-  const getUsersFromDB = (room_id)=>{
-     
-      if(!room_id)
+  const getUsersFromDB = (room)=>{
+
+      if(!room)
         return;
+    const room_id = room.id;
     fetch("http://localhost:5000/users-from-room", 
     {
       method: 'POST',
@@ -105,7 +135,8 @@ export default function ProductProvider(props) {
                      setOnlineUsers:setOnlineUsers,
                      setCurrentRoom:setCurrentRoom,
                      getUsersFromDB:getUsersFromDB,
-                     joinRoom:joinRoom
+                     joinRoom:joinRoom,
+                     setRooms:setRooms
                  }}
                  >
                  {props.children}

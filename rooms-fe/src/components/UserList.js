@@ -3,13 +3,10 @@ import React,{ useState } from 'react'
 import { ProductConsumer } from "../context";
 import User from './User';
 import { useHistory } from 'react-router';
+import Title from './Title';
 
 export default function UserList () {
-  const [refresh, setRefresh] = useState(false); 
 
-  const reloadComponent = ()=>{
-    setRefresh(!refresh);
-  }
   let history = useHistory();
  const exitRoom = (user,room_id)=>{
    console.log(user, "exiting room number", room_id)
@@ -33,13 +30,19 @@ export default function UserList () {
                 <ProductConsumer>
                    {(value) => {
                       const  {currentRoom, loggedIn,onlineUsers,setOnlineUsers, user,joinRoom} = value;
+                      
                        // check if there is a user logged in and that he exists in that certain room
                         const usernames = onlineUsers.map(obj=>obj.username);
                         const userInRoom = usernames.includes(user);
 
                       return(
                         <React.Fragment>
+                          {
+                            currentRoom ? <Title name="Welcome to" title={currentRoom.name}></Title> 
+                            : <div></div> 
+                          }
                         
+                       
                       {
                          value.onlineUsers.map((user) => {
                             return (
@@ -50,7 +53,7 @@ export default function UserList () {
                           })
                         }
                         {
-                          loggedIn &&  userInRoom? <ButtonContainer onClick={()=>exitRoom(user,currentRoom)}>Exit Room</ButtonContainer> :  loggedIn &&  !userInRoom  ? 
+                          loggedIn &&  userInRoom? <ButtonContainer onClick={()=>exitRoom(user,currentRoom.id)}>Exit Room</ButtonContainer> :  loggedIn &&  !userInRoom  ? 
                           <ButtonContainer onClick={()=>{
                             joinRoom(currentRoom,user,history);
                           }}>Join Room</ButtonContainer> : <React.Fragment></React.Fragment>

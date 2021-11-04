@@ -8,12 +8,11 @@ import UserList from './UserList';
 import { useHistory } from 'react-router';
 export default function Room (props) {
   let history = useHistory();
-  const showUserList = (room_id)=>{
-    props.setCurrentRoom(room_id);
+  const showUserList = ()=>{
+    props.setCurrentRoom(props.room);
     history.push("/user-list"); 
   }
-  
-  
+ 
         const user = props.user;
         const loggedIn = props.loggedIn;
         const { id, name, description } = props.room;
@@ -22,13 +21,13 @@ export default function Room (props) {
                 <div className='card'>
                   <div>
                     <h3 className="text-blue font-italic mb-0">
-                    <button onClick={()=>showUserList(id)}> {name}  </button>
+                    <button onClick={showUserList}> {name}  </button>
                     </h3>
                     <span>  {description}  </span>
                     {
                       loggedIn ? <ButtonContainer onClick={()=>{
                         console.log("outside join")
-                        props.joinRoom(id,user,history)}}>Join Room</ButtonContainer>:
+                        props.joinRoom(props.room,user,history)}}>Join Room</ButtonContainer>:
                       <React.Fragment></React.Fragment>
                     }        
                   </div>
